@@ -18,7 +18,7 @@ class ProductResource extends JsonResource
             'id' =>$this->id,
             'name' => $this->name,
             'price' => $this->price,
-            'expiration' => $this->expiration->format('Y-m-d'),
+            'expiration' => $this->expiration !== null ? $this->expiration->format('Y-m-d') : 'None',
             'owner' => new UserResource($this->whenLoaded('owner'))
         ];
     }

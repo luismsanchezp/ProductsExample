@@ -44,16 +44,18 @@ class ProductController extends Controller
             $name = $request->input('name');
             $price = $request->input('price');
             $expiration = $request->input('expiration');
-            $owner_id = $id;
 
             $product = Product::create([
                 'name'=>$name,
                 'price'=>$price,
                 'expiration'=>$expiration,
-                'user_id'=>$owner_id
+                'user_id'=>$id
             ]);
 
-            return (new ProductResource($product))
+            return (new ProductResource($product
+                    ->loadMissing('owner')
+                )
+            )
                 ->response()
                 ->setStatusCode(201);
         } else {
